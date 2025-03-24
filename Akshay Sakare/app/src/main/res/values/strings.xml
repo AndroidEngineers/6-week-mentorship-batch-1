@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MoviesApp</string>
-
+<string name="welcome">Welcome</string>
+<string name="splash_btn">Click Here To Start Your MoviesApp</string>
+    <string name="wait">"Wait.. Movie Will Release Soon"</string>
 
 </resources>

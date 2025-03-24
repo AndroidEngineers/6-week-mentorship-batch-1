@@ -28,7 +28,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.apsakare.moviesapp.ui.theme.Black
 import com.apsakare.moviesapp.ui.theme.MoviesAppTheme
+import com.apsakare.moviesapp.ui.theme.White
+import com.apsakare.moviesapp.ui.theme.app_black
+import com.apsakare.moviesapp.ui.theme.golden
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +44,7 @@ class MainActivity : ComponentActivity() {
             MoviesAppTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = colorResource(id = R.color.app_black)
+                    color =  app_black
                 ) {
                     showSplash()
                 }
@@ -57,9 +61,6 @@ fun showSplash(){
             alignment = Alignment.Center,
 
             modifier = Modifier.matchParentSize()
-
-
-
         )
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -67,39 +68,24 @@ fun showSplash(){
              horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
-            val ctx = LocalContext.current;
-Text(text = "Welcome", color = colorResource(id = R.color.white), fontWeight = FontWeight.Bold,
+            val sContext = LocalContext.current;
+Text(text = sContext.getString(R.string.welcome), color = White, fontWeight = FontWeight.Bold,
     fontSize = 35.sp)
             Spacer(modifier = Modifier.width(10.dp))
 Button(onClick = {
-    Toast.makeText(ctx, "Wait.. Movie Will Release Soon", Toast.LENGTH_LONG).show()
+    Toast.makeText(sContext, sContext.getText(R.string.splash_btn), Toast.LENGTH_LONG).show()
 },
     modifier = Modifier.padding(16.dp).align(CenterHorizontally),
 
-    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.golden))
+    colors = ButtonDefaults.buttonColors(golden)
     ) {
     Text(modifier = Modifier.padding(10.dp),
-        text = "Click Here To Start Your MoviesApp", color = colorResource(id = R.color.black),
+        text = sContext.getString(R.string.splash_btn), color = Black,
         fontSize = 15.sp)
 }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MoviesAppTheme {
-        Greeting("Android")
-    }
-}
