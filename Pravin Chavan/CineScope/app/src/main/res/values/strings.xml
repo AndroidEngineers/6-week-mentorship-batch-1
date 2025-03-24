@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CineScope</string>
+    <string name="search_by_movie">Search By Movie</string>
+</resources>
