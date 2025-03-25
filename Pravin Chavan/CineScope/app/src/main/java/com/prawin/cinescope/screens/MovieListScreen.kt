@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -28,11 +30,14 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -48,51 +53,61 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.prawin.cinescope.R
-import com.prawin.cinescope.ui.theme.goldenShade
-import com.prawin.cinescope.ui.theme.reddish
+import com.prawin.cinescope.ui.theme.darkGoldenShade
+import com.prawin.cinescope.ui.theme.darkReddish
 import com.prawin.cinescope.ui.theme.white
 
 @Preview
 @Composable
+private fun PreviewMovieListScreen() {
+    MovieListScreen()
+}
+
+@Composable
 private fun MovieListScreen() {
+    val searchText = rememberSaveable() { mutableStateOf("") }
     Column {
         Row(Modifier.padding(8.dp)) {
             CustomOutlinedTextField(
                 modifier = Modifier
                     .weight(1f),
-                text = "",
-                onValueChange = {},
+                text = searchText.value,
+                onValueChange = {
+                    searchText.value = it
+                },
             )
             Spacer(Modifier.width(8.dp))
             Button(
-                colors = ButtonDefaults.buttonColors(goldenShade),
+                colors = ButtonDefaults.buttonColors(darkGoldenShade),
                 modifier = Modifier
-                    .width(32.dp)
-                    .height(32.dp),
+                    .size(32.dp),
                 elevation = ButtonDefaults.buttonElevation(6.dp),
                 contentPadding = PaddingValues(4.dp),
-                onClick = {}) {
+                onClick = {
+                    //todo perform filtration
+                }) {
                 Image(
                     modifier = Modifier.size(28.dp),
                     colorFilter = ColorFilter.tint(white),
                     imageVector = Icons.Rounded.FilterList,
-                    contentDescription = ""
+                    contentDescription = "filter"
                 )
             }
             Spacer(Modifier.width(8.dp))
             Button(
-                colors = ButtonDefaults.buttonColors(reddish),
+                colors = ButtonDefaults.buttonColors(darkReddish),
                 modifier = Modifier
-                    .width(32.dp)
-                    .height(32.dp),
+                    .size(32.dp),
                 elevation = ButtonDefaults.buttonElevation(6.dp),
                 contentPadding = PaddingValues(4.dp),
-                onClick = {}) {
+                onClick = {
+                    //todo perform sorting
+                }) {
                 Image(
                     modifier = Modifier.size(28.dp),
                     colorFilter = ColorFilter.tint(white),
                     imageVector = Icons.AutoMirrored.Rounded.Sort,
-                    contentDescription = ""
+                    contentDescription = "sort"
                 )
             }
         }
@@ -115,13 +130,13 @@ fun CustomOutlinedTextField(
             .height(32.dp)
             .width(OutlinedTextFieldDefaults.MinWidth),
         interactionSource = interactionSource,
-        textStyle = TextStyle(fontSize = 16.sp, color = reddish),
+        textStyle = TextStyle(fontSize = 16.sp, color = darkReddish),
     ) { innerTextField ->
         OutlinedTextFieldDefaults.DecorationBox(
             placeholder = {
                 Text(
                     text = stringResource(R.string.search_by_movie),
-                    color = reddish,
+                    color = darkReddish,
                     modifier = Modifier.alpha(0.5f)
                 )
             },
@@ -138,7 +153,7 @@ fun CustomOutlinedTextField(
             container = {
                 Box(
                     modifier = Modifier.border(
-                        color = reddish,
+                        color = darkReddish,
                         width = 1.dp,
                         shape = RoundedCornerShape(16.dp)
                     )
@@ -172,7 +187,7 @@ private fun MovieCard() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(reddish)
+                    .background(darkReddish)
                     .padding(horizontal = 4.dp, vertical = 2.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -206,7 +221,7 @@ private fun MovieCard() {
                 .fillMaxWidth()
                 .padding(horizontal = 4.dp, vertical = 2.dp),
             text = "The Lion King (2024)",
-            color = reddish,
+            color = darkReddish,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleMedium
         )
