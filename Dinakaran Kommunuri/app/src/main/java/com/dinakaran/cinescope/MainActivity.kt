@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun HPreview() {
+fun MainActivityPreview() {
     Scaffold(
         topBar = { TitleBar() },
         bottomBar = { BottomNavigation() }

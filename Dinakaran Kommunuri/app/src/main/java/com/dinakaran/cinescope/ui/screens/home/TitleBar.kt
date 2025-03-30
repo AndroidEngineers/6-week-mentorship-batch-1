@@ -12,12 +12,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.dinakaran.cinescope.R
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun TitleBar(){
 
@@ -31,7 +29,7 @@ fun TitleBar(){
         },
         actions = {
             IconButton(
-                onClick = {/* Handle Search Click */}
+                onClick = {/* TODO: Handle Search Click */}
             ) {
                 Icon(
                     Icons.Filled.Search,
@@ -39,7 +37,7 @@ fun TitleBar(){
                 )
             }
             IconButton(
-                onClick = {/* Handle Filter Click */}
+                onClick = {/* TODO: Handle Filter Click */}
             ) {
                 Icon(
                     Icons.Filled.FilterList,

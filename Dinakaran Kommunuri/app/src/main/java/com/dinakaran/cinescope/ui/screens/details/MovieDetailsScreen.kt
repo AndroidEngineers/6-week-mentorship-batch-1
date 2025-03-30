@@ -147,6 +147,3 @@ val dummyRelated = listOf(
     RelatedMovie(5, "Related 5", R.drawable.local_movie),
     RelatedMovie(6, "Related 6", R.drawable.local_movie)
 )
-
-
-

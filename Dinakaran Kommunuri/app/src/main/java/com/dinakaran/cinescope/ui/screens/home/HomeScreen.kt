@@ -45,21 +45,21 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 MovieSection(
                         title = stringResource(R.string.upcoming),
                         movies = dummyUpcoming,
-                        onViewAllClick = { /* Handle navigation */ }
+                        onViewAllClick = { /* TODO Handle navigation */ }
                 )
 
                 // Popular Section
                 MovieSection(
                         title = stringResource(R.string.popular),
                         movies = dummyPopular,
-                        onViewAllClick = { /* Handle navigation */ }
+                        onViewAllClick = { /* TODO Handle navigation */ }
                 )
 
                 // Top Rated Section
                 MovieSection(
                         title = stringResource(R.string.top_rated),
                         movies = dummyTopRated,
-                        onViewAllClick = { /* Handle navigation */ }
+                        onViewAllClick = { /* TODO Handle navigation */ }
                 )
         }
 }
@@ -101,4 +101,3 @@ val dummyFeatured = listOf(
         Movie(5, "Featured 5", R.drawable.local_movie),
         Movie(6, "Featured 6", R.drawable.local_movie)
 )
-
