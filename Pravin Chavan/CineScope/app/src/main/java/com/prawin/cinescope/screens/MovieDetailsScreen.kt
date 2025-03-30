@@ -17,16 +17,20 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +46,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnitType
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.prawin.cinescope.R
@@ -67,24 +73,44 @@ val genreList = listOf<Genre>(
     Genre(id = 10, name = "sports"),
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun MovieDetailsPreview() {
-    Column {
-        MovieHeader()
-        MovieOverview(popularity = 5f)
-        MovieProduction(modifier = Modifier.weight(1f))
-        BottomButtons()
-    }
+    MovieDetails(PaddingValues(0.dp))
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieDetails(paddingValues: PaddingValues) {
+    val watchOptSheetState = rememberModalBottomSheetState()
+    var isWatchOptSheetOpen = rememberSaveable { mutableStateOf(false) }
+    val alrdyWatchdSheetState = rememberModalBottomSheetState()
+    var isAlrdyWatchdSheetOpen = rememberSaveable { mutableStateOf(false) }
+
     Column {
         MovieHeader()
         MovieOverview(popularity = 5f)
         MovieProduction(modifier = Modifier.weight(1f))
-        BottomButtons()
+        BottomButtons(
+            isWatchOptSheetOpen = isWatchOptSheetOpen,
+            isAlrdyWatchdSheetOpen = isAlrdyWatchdSheetOpen
+        )
+    }
+
+    if (isWatchOptSheetOpen.value) {
+        ModalBottomSheet(onDismissRequest = {
+            isWatchOptSheetOpen.value = false
+        }, sheetState = watchOptSheetState) {
+            WatchOptSheetContents(isWatchOptSheetOpen)
+        }
+    }
+    if (isAlrdyWatchdSheetOpen.value) {
+        ModalBottomSheet(onDismissRequest = {
+            isAlrdyWatchdSheetOpen.value = false
+        }, sheetState = alrdyWatchdSheetState) {
+            AlreadyWatchedSheetContents(isAlrdyWatchdSheetOpen)
+        }
     }
 }
 
@@ -106,7 +132,7 @@ fun MovieHeader() {
         Column(
             modifier = Modifier
                 .weight(0.6f)
-                .wrapContentHeight()
+                .wrapContentHeight(),
         ) {
             Text(text = "The Lion King", style = MaterialTheme.typography.titleMedium)
             Text(text = "Released On : dd/MM/yyyy", style = MaterialTheme.typography.bodyMedium)
@@ -147,7 +173,7 @@ fun MovieOverview(modifier: Modifier = Modifier, popularity: Float) {
             ) {
                 Column(
                     modifier
-                        .padding(4.dp)
+                        .padding(top = 4.dp, start = 4.dp, end = 4.dp)
                         .size(60.dp)
                         .drawBehind({
                             val compSize = size / 1.25f
@@ -188,15 +214,27 @@ fun MovieOverview(modifier: Modifier = Modifier, popularity: Float) {
                             .wrapContentHeight(),
                         textAlign = TextAlign.Center
                     )
-                    Text(
-                        text = "30000 Votes",
-                        fontSize = 8.sp,
-                        textAlign = TextAlign.Center
-                    )
                 }
+                Text(
+                    modifier = Modifier
+                        .padding(start = 4.dp, end = 4.dp, bottom = 4.dp)
+                        .width(60.dp),
+                    text = "30000 Votes",
+                    fontSize = 8.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
             }
             Spacer(Modifier.width(8.dp))
-            Text(text = "Simba, a young lion prince, flees his kingdom after the murder of his father, Mufasa. Years later, a chance encounter with Nala, a lioness, causes him to return and take back what is rightfully his. Simba, a young lion prince, flees his kingdom after the murder of his father, Mufasa. Years later, a chance encounter with Nala, a lioness, causes him to return and take back what is rightfully his. Simba, a young lion prince, flees his kingdom after the murder of his father, Mufasa. Years later, a chance encounter with Nala, a lioness, causes him to return and take back what is rightfully his. Simba, a young lion prince, flees his kingdom after the murder of his father, Mufasa. Years later, a chance encounter with Nala, a lioness, causes him to return and take back what is rightfully his.")
+            Text(
+                text = "Simba, a young lion prince, flees his kingdom after the murder of his father, Mufasa. Years later, a chance encounter with Nala, a lioness, causes him to return and take back what is rightfully his. Simba, a young lion prince, flees his kingdom after the murder of his father, Mufasa. Years later, " +
+                        "a chance encounter with Nala, a lioness, causes him to return and take back what is rightfully his. Simba, a young lion prince, flees his kingdom after the murder of his father, Mufasa. Years later, a chance encounter with Nala, a lioness, causes him to return and take back what is rightfully his. Simba, a young lion prince, flees his kingdom after the murder of his father, Mufasa. Years later, a chance encounter with Nala, a lioness, causes him to return and take back what is rightfully his.",
+                letterSpacing = TextUnit(
+                    0f,
+                    TextUnitType.Sp
+                ),
+                lineHeight = TextUnit(18f, TextUnitType.Sp)
+            )
         }
     }
 }
@@ -221,11 +259,14 @@ fun MovieProduction(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun BottomButtons() {
+private fun BottomButtons(
+    isWatchOptSheetOpen: MutableState<Boolean>,
+    isAlrdyWatchdSheetOpen: MutableState<Boolean>
+) {
     Row(modifier = Modifier.padding(8.dp)) {
         Button(
             onClick = {
-                //todo add to favourites
+                isAlrdyWatchdSheetOpen.value = true
             },
             colors = ButtonDefaults.buttonColors(darkRed),
             modifier = Modifier
@@ -236,7 +277,7 @@ private fun BottomButtons() {
         Spacer(Modifier.width(8.dp))
         Button(
             onClick = {
-                //todo add to favourites
+                isWatchOptSheetOpen.value = true
             },
             colors = ButtonDefaults.buttonColors(darkGold),
             modifier = Modifier

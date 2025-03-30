@@ -12,8 +12,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prawin.cinescope.R
+
+@Preview
+@Composable
+private fun SplashScreenPreview() {
+    splashScreen(PaddingValues(0.dp))
+}
 
 @Composable
 fun splashScreen(innerPadding: PaddingValues) {

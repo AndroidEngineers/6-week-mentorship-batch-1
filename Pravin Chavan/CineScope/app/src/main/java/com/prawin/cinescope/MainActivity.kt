@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prawin.cinescope.screens.MovieDetails
 import com.prawin.cinescope.screens.MovieHeader
+import com.prawin.cinescope.screens.MovieListScreen
 import com.prawin.cinescope.screens.splashScreen
 import com.prawin.cinescope.ui.theme.CineScopeTheme
 
@@ -23,10 +24,9 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             CineScopeTheme {
-                /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MovieDetails(innerPadding)
-                }*/
-                MovieDetails(PaddingValues(0.dp))
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    MovieListScreen(innerPadding)
+                }
             }
         }
     }

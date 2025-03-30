@@ -13,6 +13,7 @@ val darkReddish = Color(0xFFE63946)
 //Background Colors
 val darkGray = Color(0xFF1E1E1E)
 val lightGray = Color(0xFF2D2D2D)
+val extraLightGray = Color(0x55B3B3B3)
 
 //Text Colors
 val white = Color(0xFFFFFFFF)
