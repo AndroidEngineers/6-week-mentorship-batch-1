@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CineScope</string>
+    <string name="search_by_movie">Search By Movie</string>
+    <string name="watch_options">Watch Options</string>
+    <string name="already_watched">Already Watched</string>
+    <string name="production_companies">Production Companies</string>
+    <string name="overview">Overview</string>
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
+    <string name="cancel">Cancel</string>
+</resources>
